@@ -42,10 +42,10 @@ export default function Home() {
   ];
 
   const services = [
-    { icon: <Leaf />, name: "Lawn Care", desc: "Mowing, fertilization, and weed control for a lush green carpet." },
-    { icon: <Trees />, name: "Garden Design", desc: "Expert selection of flora to suit your soil and aesthetic vision." },
-    { icon: <Droplets />, name: "Irrigation", desc: "Smart watering systems that save water while keeping plants healthy." },
-    { icon: <Shovel />, name: "Hardscaping", desc: "Custom patios, retaining walls, and walkways built to last." }
+    { icon: <Leaf />, name: "Lawn Care", desc: "Mowing, fertilization, and weed control for a lush green carpet.", image: "https://images.unsplash.com/photo-1592150621344-82d43b4a23ce?auto=format&fit=crop&q=80&w=600" },
+    { icon: <Trees />, name: "Garden Design", desc: "Expert selection of flora to suit your soil and aesthetic vision.", image: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?auto=format&fit=crop&q=80&w=600" },
+    { icon: <Droplets />, name: "Irrigation", desc: "Smart watering systems that save water while keeping plants healthy.", image: "https://images.unsplash.com/photo-1416872848652-30fd014ca98e?auto=format&fit=crop&q=80&w=600" },
+    { icon: <Shovel />, name: "Hardscaping", desc: "Custom patios, retaining walls, and walkways built to last.", image: "https://images.unsplash.com/photo-1598902108854-10e335adac99?auto=format&fit=crop&q=80&w=600" }
   ];
 
   const whyUs = [
@@ -70,11 +70,12 @@ export default function Home() {
       <section className="relative h-[95vh] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src={content.hero.backgroundImage}
+            src="https://images.unsplash.com/photo-1558904541-efa8c1ae0062?auto=format&fit=crop&q=80&w=2000"
             alt="Beautiful Landscape"
-            className="w-full h-full object-cover brightness-[0.4]"
-            referrerPolicy="no-referrer"
+            className="w-full h-full object-cover brightness-[0.35]"
           />
+          <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/60 via-transparent to-emerald-900/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -84,8 +85,8 @@ export default function Home() {
               animate={{ opacity: 1, x: 0 }}
               className="flex items-center gap-3"
             >
-              <div className="h-[2px] w-12 bg-emerald-500" />
-              <span className="uppercase tracking-[0.3em] text-xs font-bold text-emerald-400">Professional Landscaping & Design</span>
+              <div className="h-[2px] w-12 bg-emerald-400" />
+              <span className="uppercase tracking-[0.3em] text-xs font-bold text-emerald-300">Professional Landscaping & Design</span>
             </motion.div>
             
             <motion.h1
@@ -94,9 +95,9 @@ export default function Home() {
               transition={{ delay: 0.2, duration: 0.8 }}
               className="text-6xl md:text-8xl font-display font-bold leading-[1.05] tracking-tight"
             >
-              {content.hero.title.split(' ').slice(0, 2).join(' ')} <br />
-              <span className="text-emerald-500 italic drop-shadow-sm font-light">
-                {content.hero.title.split(' ').slice(2).join(' ')}
+              Shining Diamond <br />
+              <span className="text-emerald-400 italic drop-shadow-sm font-light">
+                Land & House
               </span>
             </motion.h1>
 
@@ -104,9 +105,9 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-2xl font-light"
+              className="text-lg md:text-xl text-slate-200 leading-relaxed max-w-2xl font-light"
             >
-              {content.hero.subtitle}
+              Professional Gardening & Landscaping Excellence across the United States.
             </motion.p>
 
             <motion.div
@@ -115,8 +116,8 @@ export default function Home() {
               transition={{ delay: 0.6, duration: 0.8 }}
               className="flex flex-wrap gap-5"
             >
-              <Button asChild size="lg" className="bg-emerald-600 hover:bg-emerald-700 h-16 px-10 text-base font-bold uppercase tracking-wider rounded-xl shadow-xl shadow-emerald-950/20">
-                <Link to="/contact">{content.hero.cta} <ArrowRight className="ml-2" size={18} /></Link>
+              <Button asChild size="lg" className="bg-emerald-600 hover:bg-emerald-700 h-16 px-10 text-base font-bold uppercase tracking-wider rounded-xl shadow-xl shadow-emerald-950/30">
+                <Link to="/contact">Book Appointment <ArrowRight className="ml-2" size={18} /></Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="h-16 px-10 text-base font-bold uppercase tracking-wider rounded-xl border-white/30 text-white hover:bg-white hover:text-emerald-950 transition-all backdrop-blur-sm">
                 <Link to="/gallery">View Portfolio</Link>
@@ -132,7 +133,7 @@ export default function Home() {
             <motion.div 
               animate={{ y: [0, 48] }} 
               transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-              className="absolute top-0 left-0 w-full h-1/2 bg-emerald-500"
+              className="absolute top-0 left-0 w-full h-1/2 bg-emerald-400"
             />
           </div>
         </div>
@@ -157,32 +158,64 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
                 viewport={{ once: true }}
-                className="group p-10 rounded-3xl bg-slate-50 border border-slate-100 text-center space-y-6 hover:bg-white hover:shadow-2xl hover:shadow-emerald-900/5 transition-all duration-500 relative overflow-hidden"
+                className="group rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 relative"
               >
-                <div className="absolute top-0 right-0 p-4 opacity-[0.03] transform scale-150 rotate-12 text-slate-900 group-hover:text-emerald-600 transition-colors">
-                  {service.icon}
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img
+                    src={service.image}
+                    alt={service.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                 </div>
-                <div className="w-16 h-16 mx-auto bg-white rounded-2xl shadow-sm text-emerald-600 flex items-center justify-center group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300 transform group-hover:scale-110 group-hover:-rotate-6">
-                  {i === 0 && <Leaf size={32} />}
-                  {i === 1 && <Trees size={32} />}
-                  {i === 2 && <Droplets size={32} />}
-                  {i === 3 && <Shovel size={32} />}
+                <div className="absolute bottom-0 left-0 right-0 p-6 space-y-3">
+                  <div className="w-12 h-12 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-lg">
+                    {i === 0 && <Leaf size={24} />}
+                    {i === 1 && <Trees size={24} />}
+                    {i === 2 && <Droplets size={24} />}
+                    {i === 3 && <Shovel size={24} />}
+                  </div>
+                  <h3 className="text-xl font-bold text-white">{service.name}</h3>
+                  <p className="text-white/80 text-sm leading-relaxed">{service.desc}</p>
+                  <Link to="/services" className="inline-flex items-center gap-2 text-xs font-bold text-emerald-400 uppercase tracking-widest pt-2 hover:gap-3 transition-all">
+                    Read More <ChevronRight size={14} />
+                  </Link>
                 </div>
-                <h3 className="text-xl font-bold text-slate-900">{service.name}</h3>
-                <p className="text-slate-600 leading-relaxed text-sm">{service.desc}</p>
-                <Link to="/services" className="inline-flex items-center gap-2 text-xs font-bold text-emerald-600 uppercase tracking-widest pt-4 opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
-                  Read More <ChevronRight size={14} />
-                </Link>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* Image Divider */}
+      <section className="relative h-[400px] overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&q=80&w=2000"
+          alt="Garden"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-emerald-950/60" />
+        <div className="absolute inset-0 flex items-center justify-center text-center text-white px-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="space-y-4"
+          >
+            <h2 className="text-4xl md:text-5xl font-display font-bold">Your Dream Landscape Starts Here</h2>
+            <p className="text-xl text-emerald-100 max-w-2xl mx-auto">Every project begins with a vision. Let us bring yours to life.</p>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Stats Counter Strip */}
       <section className="bg-emerald-950 py-20 text-white overflow-hidden relative">
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
+        <div className="absolute inset-0 opacity-5">
+          <img
+            src="https://images.unsplash.com/photo-1416872848652-30fd014ca98e?auto=format&fit=crop&q=80&w=2000"
+            alt=""
+            className="w-full h-full object-cover"
+          />
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 text-center">
@@ -202,17 +235,19 @@ export default function Home() {
 
       {/* Why Choose Us */}
       <section className="py-24 bg-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-50 rounded-full blur-[100px] -z-0" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div className="relative">
               <div className="relative z-10 rounded-[3rem] overflow-hidden aspect-[4/5] shadow-2xl">
                 <img 
-                  src="https://images.unsplash.com/photo-1558904541-efa8c1ae0062?auto=format&fit=crop&q=80&w=1000"
+                  src="https://images.unsplash.com/photo-1592150621344-82d43b4a23ce?auto=format&fit=crop&q=80&w=1000"
                   alt="Quality Work"
                   className="w-full h-full object-cover"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/30 to-transparent" />
               </div>
-              <div className="absolute -bottom-10 -right-10 bg-emerald-600 p-12 rounded-[2.5rem] z-20 hidden md:block shadow-2xl shadow-emerald-900/20">
+              <div className="absolute -bottom-10 -right-10 bg-emerald-600 p-12 rounded-[2.5rem] z-20 hidden md:block shadow-2xl shadow-emerald-900/30">
                 <div className="flex items-center gap-6 text-white">
                   <span className="text-6xl font-display font-bold tracking-tighter">15</span>
                   <span className="text-sm font-bold uppercase leading-tight tracking-[0.1em]">
@@ -220,7 +255,7 @@ export default function Home() {
                   </span>
                 </div>
               </div>
-              <div className="absolute -top-10 -left-10 w-64 h-64 bg-emerald-100 rounded-full blur-[80px] -z-10" />
+              <div className="absolute -top-6 -left-6 w-32 h-32 bg-emerald-600/10 rounded-full blur-2xl -z-10" />
             </div>
 
             <div className="space-y-12">
@@ -229,6 +264,9 @@ export default function Home() {
                 <h2 className="text-4xl font-display font-bold text-slate-900 tracking-tight leading-tight">
                   Why Our Clients Trust Us <br /> For Their Outdoor Spaces
                 </h2>
+                <p className="text-slate-600 leading-relaxed text-lg">
+                  We combine decades of expertise with cutting-edge design to create landscapes that inspire.
+                </p>
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
@@ -253,37 +291,90 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-24 bg-slate-50 relative overflow-hidden">
-         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="text-center mb-16 space-y-4">
-              <span className="text-emerald-600 font-bold uppercase tracking-[0.2em] text-sm">Customer Feedback</span>
-              <h2 className="text-4xl font-display font-bold text-slate-900">What Our Clients Say</h2>
-            </div>
+      {/* Testimonials with Background */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1533467686150-d1e63a1c7845?auto=format&fit=crop&q=80&w=2000"
+            alt="Background"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-slate-900/80" />
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-16 space-y-4">
+            <span className="text-emerald-400 font-bold uppercase tracking-[0.2em] text-sm">Customer Feedback</span>
+            <h2 className="text-4xl font-display font-bold text-white">What Our Clients Say</h2>
+          </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                { name: "Hanan Innocent", location: "Washington", text: "They completed the job on time and it looked better than what we expected. We feel very satisfied.", rating: 5 },
-                { name: "Fedo Elweed", location: "Los Angeles", text: "Excellent job, excellent workmanship. The job was neat, thorough and professional.", rating: 5 },
-                { name: "Astley Jenifer", location: "California", text: "Shining Diamond helped me transform my dated, patchwork front yard into an inviting landscape.", rating: 5 }
-              ].map((t, i) => (
-                <div key={i} className="bg-white p-10 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col items-center text-center space-y-6">
-                  <div className="flex gap-1">
-                    {[...Array(t.rating)].map((_, i) => <Star key={i} className="fill-emerald-400 text-emerald-400" size={16} />)}
-                  </div>
-                  <p className="text-slate-600 leading-relaxed italic">"{t.text}"</p>
-                  <div className="pt-4 border-t border-slate-50 w-full">
-                    <h4 className="font-bold text-slate-900">{t.name}</h4>
-                    <p className="text-xs text-slate-400 uppercase tracking-widest">{t.location}</p>
-                  </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { name: "Hanan Innocent", location: "Washington", text: "They completed the job on time and it looked better than what we expected. We feel very satisfied.", rating: 5 },
+              { name: "Fedo Elweed", location: "Los Angeles", text: "Excellent job, excellent workmanship. The job was neat, thorough and professional.", rating: 5 },
+              { name: "Astley Jenifer", location: "California", text: "Shining Diamond helped me transform my dated, patchwork front yard into an inviting landscape.", rating: 5 }
+            ].map((t, i) => (
+              <div key={i} className="bg-white/10 backdrop-blur-md p-10 rounded-[2rem] border border-white/10 flex flex-col items-center text-center space-y-6 hover:bg-white/15 transition-all">
+                <div className="flex gap-1">
+                  {[...Array(t.rating)].map((_, i) => <Star key={i} className="fill-emerald-400 text-emerald-400" size={16} />)}
                 </div>
-              ))}
-            </div>
-         </div>
+                <p className="text-white/80 leading-relaxed italic text-lg">"{t.text}"</p>
+                <div className="pt-4 border-t border-white/10 w-full">
+                  <h4 className="font-bold text-white">{t.name}</h4>
+                  <p className="text-xs text-emerald-300 uppercase tracking-widest">{t.location}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Work Gallery Strip */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16 space-y-4">
+            <span className="text-emerald-600 font-bold uppercase tracking-[0.2em] text-sm">Our Portfolio</span>
+            <h2 className="text-4xl font-display font-bold text-slate-900">Featured Projects</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { img: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&q=80&w=800", title: "English Garden Restoration", location: "Connecticut" },
+              { img: "https://images.unsplash.com/photo-1558904541-efa8c1ae0062?auto=format&fit=crop&q=80&w=800", title: "Modern Walkway & Lighting", location: "Oregon" },
+              { img: "https://images.unsplash.com/photo-1598902108854-10e335adac99?auto=format&fit=crop&q=80&w=800", title: "Stone Patio & Fire Pit", location: "Colorado" },
+              { img: "https://images.unsplash.com/photo-1416872848652-30fd014ca98e?auto=format&fit=crop&q=80&w=800", title: "Luxury Pool Landscape", location: "California" },
+              { img: "https://images.unsplash.com/photo-1599110502273-049896791986?auto=format&fit=crop&q=80&w=800", title: "Emerald Lawn Design", location: "New York" },
+              { img: "https://images.unsplash.com/photo-1533467686150-d1e63a1c7845?auto=format&fit=crop&q=80&w=800", title: "Zen Garden Installation", location: "Washington" }
+            ].map((project, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className="group relative rounded-2xl overflow-hidden aspect-[4/3] cursor-pointer"
+              >
+                <img
+                  src={project.img}
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                  <h3 className="text-white font-bold text-lg">{project.title}</h3>
+                  <p className="text-emerald-300 text-sm flex items-center gap-1"><MapPin size={14} /> {project.location}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          <div className="text-center mt-12">
+            <Button asChild size="lg" variant="outline" className="h-14 px-10 border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white">
+              <Link to="/gallery">View Full Gallery <ArrowRight className="ml-2" size={16} /></Link>
+            </Button>
+          </div>
+        </div>
       </section>
 
       {/* FAQ & Quick Contact */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
             <div className="space-y-12">
@@ -294,10 +385,10 @@ export default function Home() {
               
               <div className="space-y-4">
                 {faqs.map((faq, i) => (
-                  <div key={i} className="border border-slate-100 rounded-2xl overflow-hidden shadow-sm">
+                  <div key={i} className="border border-slate-200 rounded-2xl overflow-hidden shadow-sm bg-white">
                     <button 
                       onClick={() => setActiveFaq(activeFaq === i ? null : i)}
-                      className={`w-full flex items-center justify-between p-6 text-left transition-colors ${activeFaq === i ? "bg-emerald-50 text-emerald-600" : "bg-white text-slate-900"}`}
+                      className={`w-full flex items-center justify-between p-6 text-left transition-colors ${activeFaq === i ? "bg-emerald-50 text-emerald-700" : "bg-white text-slate-900 hover:bg-slate-50"}`}
                     >
                       <span className="font-bold">{faq.q}</span>
                       {activeFaq === i ? <Minus size={18} /> : <Plus size={18} />}
@@ -312,11 +403,14 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="bg-emerald-900 rounded-[3rem] p-12 text-white relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none group-hover:scale-110 transition-transform duration-700">
-                <Leaf size={300} />
-              </div>
-              <div className="relative z-10 space-y-8">
+            <div className="relative rounded-[3rem] overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1456073167817-2194689658ec?auto=format&fit=crop&q=80&w=800"
+                alt="Contact us"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-emerald-900/90" />
+              <div className="relative z-10 p-12 text-white space-y-8">
                 <div className="space-y-4">
                   <h3 className="text-3xl font-display font-bold leading-tight">Ready to start your <br /> next project?</h3>
                   <p className="text-emerald-100/80 leading-relaxed font-light">
@@ -325,20 +419,20 @@ export default function Home() {
                 </div>
                 <div className="space-y-6">
                   <div className="flex items-center gap-6">
-                    <div className="w-14 h-14 bg-emerald-800 rounded-2xl flex items-center justify-center">
+                    <div className="w-14 h-14 bg-emerald-700 rounded-2xl flex items-center justify-center">
                       <Phone size={24} />
                     </div>
                     <div>
-                      <p className="text-emerald-400 text-xs font-bold uppercase tracking-widest">Call Us Now</p>
+                      <p className="text-emerald-300 text-xs font-bold uppercase tracking-widest">Call Us Now</p>
                       <p className="text-xl font-bold">+1 (555) 000-0000</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-6">
-                    <div className="w-14 h-14 bg-emerald-800 rounded-2xl flex items-center justify-center">
+                    <div className="w-14 h-14 bg-emerald-700 rounded-2xl flex items-center justify-center">
                       <Mail size={24} />
                     </div>
                     <div>
-                      <p className="text-emerald-400 text-xs font-bold uppercase tracking-widest">Email Us At</p>
+                      <p className="text-emerald-300 text-xs font-bold uppercase tracking-widest">Email Us At</p>
                       <p className="text-xl font-bold">quotes@shiningdiamond.com</p>
                     </div>
                   </div>
@@ -354,14 +448,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Banner */}
-      <section className="bg-emerald-600 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+      {/* CTA Banner with Background */}
+      <section className="relative py-24 overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?auto=format&fit=crop&q=80&w=2000"
+          alt="CTA Background"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-emerald-700/90" />
+        <div className="absolute inset-0 bg-gradient-to-r from-emerald-800/50 to-emerald-600/50" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
           <div className="space-y-2">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-white tracking-tight">Need expert help right now?</h2>
-            <p className="text-emerald-100 font-medium">Professional gardening and maintenance services at your doorstep.</p>
+            <h2 className="text-3xl md:text-5xl font-display font-bold text-white tracking-tight">Need expert help right now?</h2>
+            <p className="text-xl text-emerald-100 font-medium">Professional gardening and maintenance services at your doorstep.</p>
           </div>
-          <Button asChild size="lg" className="bg-white text-emerald-600 hover:bg-emerald-50 px-12 h-14 text-sm font-bold uppercase tracking-widest shadow-xl">
+          <Button asChild size="lg" className="bg-white text-emerald-700 hover:bg-emerald-50 px-12 h-16 text-base font-bold uppercase tracking-widest shadow-2xl">
              <Link to="/contact">Book Now</Link>
           </Button>
         </div>
