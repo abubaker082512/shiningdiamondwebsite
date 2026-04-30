@@ -28,6 +28,9 @@ export default function Home() {
     return () => clearTimeout(timeout);
   }, []);
 
+  // Prepare hero fallback source and safe hero image
+  const heroSrcFallback = "https://images.unsplash.com/photo-1558904541-efa8c1ae0062?auto=format&fit=crop&q=80&w=2000";
+  const heroSrc = content?.hero?.backgroundImage || heroSrcFallback;
   if (loading) return (
     <div className="h-screen flex items-center justify-center bg-white">
       <Loader2 className="animate-spin text-emerald-600" size={48} />
@@ -70,9 +73,10 @@ export default function Home() {
       <section className="relative h-[95vh] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1558904541-efa8c1ae0062?auto=format&fit=crop&q=80&w=2000"
+            src={heroSrc}
             alt="Beautiful Landscape"
             className="w-full h-full object-cover brightness-[0.35]"
+            onError={(e) => { (e.currentTarget as HTMLImageElement).src = heroSrcFallback; }}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/60 via-transparent to-emerald-900/40" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
@@ -140,7 +144,7 @@ export default function Home() {
       </section>
 
       {/* Welcome & Services Overview */}
-      <section className="py-24 bg-white">
+      <section className="py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto space-y-4 mb-20">
             <span className="text-emerald-600 font-bold uppercase tracking-[0.2em] text-sm">Welcome to Shining Diamond</span>
