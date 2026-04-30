@@ -7,10 +7,16 @@ export default function About() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (!content) setLoading(false);
+    }, 5000);
     api.getContent().then(data => {
       setContent(data);
       setLoading(false);
+    }).catch(() => {
+      setLoading(false);
     });
+    return () => clearTimeout(timeout);
   }, []);
 
   if (loading) return (

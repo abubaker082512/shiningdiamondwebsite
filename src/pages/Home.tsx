@@ -16,10 +16,16 @@ export default function Home() {
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
 
   useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (!content) setLoading(false);
+    }, 5000);
     api.getContent().then(data => {
       setContent(data);
       setLoading(false);
+    }).catch(() => {
+      setLoading(false);
     });
+    return () => clearTimeout(timeout);
   }, []);
 
   if (loading) return (
