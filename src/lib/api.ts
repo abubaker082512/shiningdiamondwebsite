@@ -20,26 +20,36 @@ const DEFAULT_GALLERY = [
   { id: "6", url: "https://images.unsplash.com/photo-1533467686150-d1e63a1c7845?auto=format&fit=crop&q=80&w=1200", title: "Zen Garden Installation" },
 ];
 
+// Admin-auth helper: attach Authorization header when admin token is present in localStorage
+const getAuthHeader = () => {
+  try {
+    const t = typeof window !== 'undefined' ? localStorage.getItem('admin_token') : null;
+    return t ? { Authorization: `Bearer ${t}` } : {};
+  } catch {
+    return {};
+  }
+};
+
 export const api = {
-  getLeads: () => fetch("/api/leads").then((res) => res.json()).catch(() => []),
+  getLeads: () => fetch("/api/leads", { headers: getAuthHeader() }).then((res) => res.json()).catch(() => []),
   submitLead: (data: any) =>
     fetch("/api/leads", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     }).then((res) => res.json()),
-  deleteLead: (id: string) => fetch(`/api/leads/${id}`, { method: "DELETE" }),
+  deleteLead: (id: string) => fetch(`/api/leads/${id}`, { method: "DELETE", headers: getAuthHeader() }),
 
-  getGallery: () => fetch("/api/gallery").then((res) => res.json()).catch(() => DEFAULT_GALLERY),
+  getGallery: () => fetch("/api/gallery", { headers: getAuthHeader() }).then((res) => res.json()).catch(() => DEFAULT_GALLERY),
   addGalleryItem: (data: any) =>
     fetch("/api/gallery", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     }).then((res) => res.json()),
-  deleteGalleryItem: (id: string) => fetch(`/api/gallery/${id}`, { method: "DELETE" }),
+  deleteGalleryItem: (id: string) => fetch(`/api/gallery/${id}`, { method: "DELETE", headers: getAuthHeader() }),
 
-  getContent: () => fetch("/api/content").then((res) => res.json()).catch(() => DEFAULT_CONTENT),
+  getContent: () => fetch("/api/content", { headers: getAuthHeader() }).then((res) => res.json()).catch(() => DEFAULT_CONTENT),
   updateContent: (data: any) =>
     fetch("/api/content", {
       method: "POST",

@@ -25,6 +25,7 @@ import { toast } from "sonner";
 export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState("");
+  const [adminToken, setAdminToken] = useState<string | null>(null);
   const [leads, setLeads] = useState<any[]>([]);
   const [gallery, setGallery] = useState<any[]>([]);
   const [content, setContent] = useState<any>(null);
@@ -33,6 +34,12 @@ export default function Admin() {
   useEffect(() => {
     if (isAuthenticated) {
       loadData();
+    }
+    // hydrate token from localStorage
+    const t = typeof window !== 'undefined' ? localStorage.getItem('admin_token') : null;
+    if (t) {
+      setAdminToken(t);
+      setIsAuthenticated(true);
     }
   }, [isAuthenticated]);
 
@@ -61,12 +68,29 @@ export default function Admin() {
     }
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === "admin123") { // Simple demo password
-      setIsAuthenticated(true);
-      toast.success("Welcome, Admin");
-    } else {
+    // Authenticate against admin API and store a token
+    try {
+      const res = await fetch('/api/admin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: 'admin', password }),
+      });
+      if (!res.ok) {
+        throw new Error('Invalid credentials');
+      }
+      const data = await res.json();
+      const t = data?.token || null;
+      if (t) {
+        localStorage.setItem('admin_token', t);
+        setAdminToken(t);
+        setIsAuthenticated(true);
+        toast.success("Welcome, Admin");
+      } else {
+        toast.error("Invalid credentials");
+      }
+    } catch (err) {
       toast.error("Invalid credentials");
     }
   };
