@@ -1,18 +1,21 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
+import { createClient } from '@supabase/supabase-js';
 
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
-const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'admin-token-xyz';
+const SUPABASE_URL = process.env.SUPABASE_URL as string;
+const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY as string;
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-export default function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method === 'POST') {
-    const { username, password } = req.body || {};
-    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-      // Issue a simple static token that the frontend will send back in Authorization header
-      return res.status(200).json({ token: ADMIN_TOKEN });
-    }
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+  const { email, password } = req.body || {} as any;
+  // Sign in via Supabase Auth using anon key
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error || !data?.session?.access_token) {
     return res.status(401).json({ error: 'Invalid credentials' });
   }
-  res.setHeader('Allow', 'POST');
-  return res.status(405).json({ error: 'Method not allowed' });
+  const token = data.session.access_token;
+  return res.status(200).json({ token });
 }

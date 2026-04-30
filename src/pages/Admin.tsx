@@ -1,6 +1,8 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { api } from "@/lib/api";
+import { supabase } from '@/lib/dbSupabase';
+import { verifyAdminToken } from '@/lib/authGuard';
 import { 
   BarChart3, 
   Users, 
@@ -26,6 +28,8 @@ export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState("");
   const [adminToken, setAdminToken] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [leads, setLeads] = useState<any[]>([]);
   const [gallery, setGallery] = useState<any[]>([]);
   const [content, setContent] = useState<any>(null);
@@ -111,10 +115,26 @@ export default function Admin() {
 
   const addGalleryItem = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newItem.title || !newItem.url) return;
-    const added = await api.addGalleryItem(newItem);
+    if (!newItem.title && !selectedFile) return;
+    let url = newItem.url;
+    if (selectedFile) {
+      // Upload to Supabase Storage
+      setUploading(true);
+      const fileName = `${Date.now()}_${selectedFile.name}`;
+      const { data, error } = await supabase.storage.from('gallery').upload(fileName, selectedFile, {
+        contentType: selectedFile.type,
+      });
+      setUploading(false);
+      if (error) {
+        toast.error(`Upload failed: ${error.message}`);
+        return;
+      }
+      url = supabase.storage.from('gallery').getPublicUrl(data.path).publicURL as string;
+    }
+    const added = await api.addGalleryItem({ title: newItem.title || (selectedFile?.name ?? 'Untitled'), url });
     setGallery([...gallery, added]);
     setNewItem({ title: "", url: "" });
+    setSelectedFile(null);
     toast.success("Image added to gallery");
   };
 
@@ -229,11 +249,11 @@ export default function Admin() {
           <TabsContent value="gallery">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <Card className="md:col-span-1 h-fit">
-                <CardHeader>
-                  <CardTitle>Add Project</CardTitle>
-                  <CardDescription>Upload a fresh image to your public work gallery.</CardDescription>
-                </CardHeader>
-                <CardContent>
+              <CardHeader>
+                <CardTitle>Add Project</CardTitle>
+                <CardDescription>Upload a fresh image to your public work gallery.</CardDescription>
+              </CardHeader>
+              <CardContent>
                   <form onSubmit={addGalleryItem} className="space-y-4">
                     <div className="space-y-2">
                       <Label htmlFor="imgTitle">Project Title</Label>
@@ -245,15 +265,19 @@ export default function Admin() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="imgUrl">Image URL</Label>
+                      <Label htmlFor="imgFile">Upload Image</Label>
+                      <input id="imgFile" type="file" accept="image/*" onChange={e => setSelectedFile(e.target.files?.[0] ?? null)} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="imgUrl">Or Image URL</Label>
                       <Input 
                         id="imgUrl" 
                         value={newItem.url} 
                         onChange={e => setNewItem({...newItem, url: e.target.value})} 
-                        placeholder="https://images.unsplash.com/..."
+                        placeholder="https://images.unsplash.com/..." 
                       />
                     </div>
-                    <Button type="submit" className="w-full bg-slate-900"><Plus className="mr-2" size={18}/> Add to Gallery</Button>
+                    <Button type="submit" className="w-full bg-slate-900" disabled={uploading}>{(uploading ? 'Uploading...' : <><Plus className="mr-2" size={18}/> Add to Gallery</>)}</Button>
                   </form>
                 </CardContent>
               </Card>
